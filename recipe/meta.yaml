@@ -10,7 +10,7 @@ source:
   sha256: 3e5bcb57f2a7995ce4fd9c76c033050e487ea375ecf0e277dabc22159c8cfb31
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('coinbonmin', max_pin='x.x') }}
@@ -19,7 +19,6 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - {{ compiler('fortran') }}
   host:
     - pkg-config  # [unix]
     - coincbc
