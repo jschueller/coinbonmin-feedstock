@@ -10,7 +10,7 @@ source:
   sha256: 3e5bcb57f2a7995ce4fd9c76c033050e487ea375ecf0e277dabc22159c8cfb31
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('coinbonmin', max_pin='x.x') }}
@@ -23,6 +23,9 @@ requirements:
     - pkg-config  # [unix]
     - coincbc
     - ipopt
+    - libblas
+    - libcblas
+    - liblapack
   run:
     - coincbc
     - ipopt
