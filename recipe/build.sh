@@ -1,6 +1,7 @@
 
 set -e
 
+# this is needed as coincbc is not compiled with coinasl thirdparty ("pkg-config --libs cbc" should contains -lcoinasl)
 LDFLAGS="${LDFLAGS} -lcoinasl"
 
 COIN_SKIP_PROJECTS="Sample" ./configure --prefix="${PREFIX}" \
