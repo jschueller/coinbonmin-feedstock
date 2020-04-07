@@ -1,7 +1,7 @@
 
 set -e
 
-CXXFLAGS="-I${PREFIX}/include/asl ${CXXFLAGS}"
+LDFLAGS="${LDFLAGS} -lcoinasl"
 
 COIN_SKIP_PROJECTS="Sample" ./configure --prefix="${PREFIX}" \
   --with-coinutils-lib="$(pkg-config --libs coinutils)" \
