@@ -15,7 +15,7 @@ COIN_SKIP_PROJECTS="Sample" ./configure --prefix="${PREFIX}" \
   --with-ipopt-lib="$(pkg-config --libs ipopt)" \
   --with-ipopt-incdir="${PREFIX}/include/coin/" \
   --with-asl-incdir="${PREFIX}/include/asl" \
-  --with-asl-lib="$(pkg-config --libs ipoptamplinterface)" \
+  --with-asl-lib="$(pkg-config --libs ipoptamplinterface) -lasl" \
   || { cat config.log; exit 1; }
 make -j ${CPU_COUNT}
 make install
