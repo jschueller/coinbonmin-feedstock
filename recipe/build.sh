@@ -1,9 +1,6 @@
 
 set -e
 
-# this is needed as coincbc is not compiled with coinasl thirdparty ("pkg-config --libs cbc" should contains -lcoinasl)
-LDFLAGS="${LDFLAGS} -lcoinasl"
-
 COIN_SKIP_PROJECTS="Sample" ./configure --prefix="${PREFIX}" \
   --with-coinutils-lib="$(pkg-config --libs coinutils)" \
   --with-coinutils-incdir="${PREFIX}/include/coin/" \
@@ -17,6 +14,8 @@ COIN_SKIP_PROJECTS="Sample" ./configure --prefix="${PREFIX}" \
   --with-cbc-incdir="${PREFIX}/include/coin/" \
   --with-ipopt-lib="$(pkg-config --libs ipopt)" \
   --with-ipopt-incdir="${PREFIX}/include/coin/" \
+  --with-asl-incdir="${PREFIX}/include/asl" \
+  --with-asl-lib="$(pkg-config --libs ipoptamplinterface)" \
   || { cat config.log; exit 1; }
 make -j ${CPU_COUNT}
 make install
