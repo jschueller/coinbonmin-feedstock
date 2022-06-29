@@ -19,11 +19,11 @@ docker_image:
 ipopt:
 - '3.14'
 libblas:
-- 3.8 *netlib
+- 3.9 *netlib
 libcblas:
-- 3.8 *netlib
+- 3.9 *netlib
 liblapack:
-- 3.8 *netlib
+- 3.9 *netlib
 target_platform:
 - linux-64
 zip_keys:
