@@ -1,0 +1,38 @@
+From d2120d07740f18e94f410e0618009f7c82dfcecd Mon Sep 17 00:00:00 2001
+From: Stefan Vigerske <svigerske@gams.com>
+Date: Thu, 26 Jan 2023 13:19:04 +0100
+Subject: [PATCH] fix signature of EcpCuts::generateCuts()
+
+- remove const, so it properly overwrites generateCuts() of super class
+- fixes #31
+---
+ src/Algorithms/OaGenerators/BonEcpCuts.cpp | 2 +-
+ src/Algorithms/OaGenerators/BonEcpCuts.hpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Algorithms/OaGenerators/BonEcpCuts.cpp b/src/Algorithms/OaGenerators/BonEcpCuts.cpp
+index c6b0b4332..9cc4ed586 100644
+--- a/Bonmin/src/Algorithms/OaGenerators/BonEcpCuts.cpp
++++ b/Bonmin/src/Algorithms/OaGenerators/BonEcpCuts.cpp
+@@ -45,7 +45,7 @@ namespace Bonmin
+   void
+   EcpCuts::generateCuts(const OsiSolverInterface &si,
+       OsiCuts & cs,
+-      const CglTreeInfo info) const
++      const CglTreeInfo info)
+   {
+     if (beta_ >=0) {
+       BabInfo * babInfo = dynamic_cast<BabInfo *> (si.getAuxiliaryInfo());
+diff --git a/src/Algorithms/OaGenerators/BonEcpCuts.hpp b/src/Algorithms/OaGenerators/BonEcpCuts.hpp
+index baf0a519b..4179597ef 100644
+--- a/Bonmin/src/Algorithms/OaGenerators/BonEcpCuts.hpp
++++ b/Bonmin/src/Algorithms/OaGenerators/BonEcpCuts.hpp
+@@ -40,7 +40,7 @@ namespace Bonmin
+     {}
+     /** Standard cut generation methods. */
+     virtual void generateCuts(const OsiSolverInterface &si,  OsiCuts & cs,
+-        const CglTreeInfo info = CglTreeInfo()) const;
++        const CglTreeInfo info = CglTreeInfo());
+     double doEcpRounds(OsiSolverInterface &si,
+         bool leaveSiUnchanged,
+         double* violation = NULL);
