@@ -11,9 +11,11 @@ source:
   patches:
     # https://github.com/coin-or/Bonmin/issues/31
     - ecp.patch
+    # https://github.com/coin-or/Bonmin/issues/36
+    - ifp.patch
 
 build:
-  number: 12
+  number: 13
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('coinbonmin', max_pin='x.x') }}
