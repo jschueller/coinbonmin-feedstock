@@ -1,0 +1,26 @@
+From e439e2f04f162af15816431cc991b5504ca13362 Mon Sep 17 00:00:00 2001
+From: Pierre Bonami <pierre.bonami@gmail.com>
+Date: Sat, 28 Jan 2023 16:04:42 +0100
+Subject: [PATCH] Obviously wrong cutoff update
+
+Maybe for #36
+---
+ src/Algorithms/OaGenerators/BonFpForMinlp.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/Algorithms/OaGenerators/BonFpForMinlp.cpp b/src/Algorithms/OaGenerators/BonFpForMinlp.cpp
+index 2345759d..cab337f6 100644
+--- a/Bonmin/src/Algorithms/OaGenerators/BonFpForMinlp.cpp
++++ b/Bonmin/src/Algorithms/OaGenerators/BonFpForMinlp.cpp
+@@ -158,7 +158,10 @@ namespace Bonmin
+            //nlp is solved and feasible
+            // Update the cutoff
+            ub = std::min(ub, nlp_->getObjValue());
+-           cutoff = ub * (1 - parameters_.cbcCutoffIncrement_);
++           cutoff = ub > 0 ?
++                    ub * (1 - parameters_.cbcCutoffIncrement_):
++                    ub * (1 + parameters_.cbcCutoffIncrement_);
++           assert(cutoff < ub);
+            
+            numSols_++;
+          }
