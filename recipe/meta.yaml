@@ -1,7 +1,7 @@
 {% set version = "1.8.9" %}
 
 package:
-  name: coinbonmin
+  name: coin-or-bonmin
   version: {{ version }}
 
 source:
@@ -13,7 +13,7 @@ build:
   number: 1
   skip: true  # [win]
   run_exports:
-    - {{ pin_subpackage('coinbonmin', max_pin='x.x') }}
+    - {{ pin_subpackage('coin-or-bonmin', max_pin='x.x') }}
 
 requirements:
   build:
