@@ -1,7 +1,7 @@
 
 set -e
 
-LIBS="-lCoinUtils -lOsi -lCgl" COIN_SKIP_PROJECTS="Sample" ./configure --prefix="${PREFIX}" \
+LIBS="-lCoinUtils -lOsi -lCgl" ./configure --prefix="${PREFIX}" \
   --with-coinutils-lib="$(pkg-config --libs coinutils)" \
   --with-coinutils-incdir="${PREFIX}/include/coin/" \
   --with-osi-lib="$(pkg-config --libs osi)" \
