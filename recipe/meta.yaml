@@ -10,18 +10,19 @@ source:
   sha256: 8d130430a2776e250e941ee16f51dba301d5f0a00cc288e05f5b985cf1f426cd
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('coinbonmin', max_pin='x.x') }}
 
 requirements:
   build:
+    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-  host:
+    - pkg-config
     - make  # [unix]
-    - pkg-config  # [unix]
+  host:
     - coin-or-cbc
     - ipopt
     - libblas
