@@ -22,3 +22,8 @@ LIBS="-lCoinUtils -lOsi -lCgl" ./configure --prefix="${PREFIX}" \
   || { cat config.log; exit 1; }
 make -j ${CPU_COUNT}
 make install
+
+if test "$CONDA_BUILD_CROSS_COMPILATION" != "1"
+then
+  make test
+fi
