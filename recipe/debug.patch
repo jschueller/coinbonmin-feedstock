@@ -1,5 +1,5 @@
 diff --git a/Bonmin/examples/CppExample/MyBonmin.cpp b/Bonmin/examples/CppExample/MyBonmin.cpp
-index 558bac5d..2a93de6a 100644
+index 558bac5d..e1500af0 100644
 --- a/Bonmin/examples/CppExample/MyBonmin.cpp
 +++ b/Bonmin/examples/CppExample/MyBonmin.cpp
 @@ -21,59 +21,24 @@
@@ -71,7 +71,7 @@ index 558bac5d..2a93de6a 100644
    }
  
 +  // print used options
-+  String optionsLog;
++  std:string optionsLog;
 +  bonmin.options()->PrintList(optionsLog);
 +  std::cout << optionsLog << std::endl;
  
