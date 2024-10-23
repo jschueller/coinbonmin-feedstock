@@ -1,39 +1,79 @@
 diff --git a/Bonmin/examples/CppExample/MyBonmin.cpp b/Bonmin/examples/CppExample/MyBonmin.cpp
-index 558bac5d..1f457563 100644
+index 558bac5d..2a93de6a 100644
 --- a/Bonmin/examples/CppExample/MyBonmin.cpp
 +++ b/Bonmin/examples/CppExample/MyBonmin.cpp
-@@ -52,15 +52,20 @@ int main (int argc, char *argv[])
+@@ -21,59 +21,24 @@
+ #include "BonCbc.hpp"
+ #include "BonBonminSetup.hpp"
+ 
+-#include "BonOACutGenerator2.hpp"
+-#include "BonEcpCuts.hpp"
+-#include "BonOaNlpOptim.hpp"
+-//#define REDIRECT
+ 
+ int main (int argc, char *argv[])
+ {
+-  WindowsErrorPopupBlocker();
+ 
+   using namespace Ipopt;
+   using namespace Bonmin;
+   SmartPtr<MyTMINLP> tminlp = new MyTMINLP;
    
-   
-   // Here we can change the default value of some Bonmin or Ipopt option
+-#ifdef REDIRECT
+-  FILE * fp = fopen("log.out","w");
+-  CoinMessageHandler handler(fp);
+-  BonminSetup bonmin(&handler);
+-#else
++
+   BonminSetup bonmin;
+-#endif
+   bonmin.initializeOptionsAndJournalist();
+-  //Register an additional option
+-  bonmin.roptions()->AddStringOption2("print_solution","Do we print the solution or not?",
+-                                 "yes",
+-                                 "no", "No, we don't.",
+-                                 "yes", "Yes, we do.",
+-                                 "A longer comment can be put here");
+-  
+-  
+-  
+-  // Here we can change the default value of some Bonmin or Ipopt option
 -  bonmin.options()->SetNumericValue("bonmin.time_limit", 5); //changes bonmin's time limit
 -  bonmin.options()->SetStringValue("mu_oracle","loqo");
-+  //bonmin.options()->SetNumericValue("bonmin.time_limit", 5); //changes bonmin's time limit
-+  //bonmin.options()->SetStringValue("mu_oracle","loqo");
-+
-   
-   //Here we read several option files
+-  
+-  //Here we read several option files
 -  bonmin.readOptionsFile("Mybonmin.opt");
 -  bonmin.readOptionsFile();// This reads the default file "bonmin.opt"
-+  //bonmin.readOptionsFile("Mybonmin.opt");
-+  //bonmin.readOptionsFile();// This reads the default file "bonmin.opt"
-   
-   // Options can also be set by using a string with a format similar to the bonmin.opt file
+-  
+-  // Options can also be set by using a string with a format similar to the bonmin.opt file
 -  bonmin.readOptionsString("bonmin.algorithm B-BB\n");
-+  //bonmin.readOptionsString("bonmin.algorithm B-BB\n");
-+
+-  
+-  // Now we can obtain the value of the new option
+-  int printSolution;
+-  bonmin.options()->GetEnumValue("print_solution", printSolution,"");
+-  if(printSolution == 1){
+-    tminlp->printSolutionAtEndOfAlgorithm();
+-  }
 +  bonmin.options()->SetStringValue("bonmin.algorithm", "B-BB");
-+  //bonmin.options()->SetIntegerValue("bonmin.iteration_limit", 1000);
++  bonmin.options()->SetIntegerValue("bonmin.iteration_limit", 1000);
 +  bonmin.options()->SetNumericValue("bound_relax_factor", 0.0);
-   
-   // Now we can obtain the value of the new option
-   int printSolution;
-@@ -79,7 +84,7 @@ int main (int argc, char *argv[])
-     Bab bb;
-     bb(bonmin);//process parameter file using Ipopt and do branch and bound using Cbc
+ 
+   //Now initialize from tminlp
+   bonmin.initialize(GetRawPtr(tminlp));
  
 -
-+    std::cout << "success"<< std::endl;
+-
+   //Set up done, now let's branch and bound
+   try {
+     Bab bb;
+@@ -96,6 +61,10 @@ int main (int argc, char *argv[])
+ 	     <<E.message()<<std::endl;
    }
-   catch(TNLPSolver::UnsolvedError *E) {
-     //There has been a failure to solve a problem with Ipopt.
+ 
++  // print used options
++  String optionsLog;
++  bonmin.options()->PrintList(optionsLog);
++  std::cout << optionsLog << std::endl;
+ 
+   return 0;
+ }
