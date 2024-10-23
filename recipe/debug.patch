@@ -1,0 +1,39 @@
+diff --git a/Bonmin/examples/CppExample/MyBonmin.cpp b/Bonmin/examples/CppExample/MyBonmin.cpp
+index 558bac5d..1f457563 100644
+--- a/Bonmin/examples/CppExample/MyBonmin.cpp
++++ b/Bonmin/examples/CppExample/MyBonmin.cpp
+@@ -52,15 +52,20 @@ int main (int argc, char *argv[])
+   
+   
+   // Here we can change the default value of some Bonmin or Ipopt option
+-  bonmin.options()->SetNumericValue("bonmin.time_limit", 5); //changes bonmin's time limit
+-  bonmin.options()->SetStringValue("mu_oracle","loqo");
++  //bonmin.options()->SetNumericValue("bonmin.time_limit", 5); //changes bonmin's time limit
++  //bonmin.options()->SetStringValue("mu_oracle","loqo");
++
+   
+   //Here we read several option files
+-  bonmin.readOptionsFile("Mybonmin.opt");
+-  bonmin.readOptionsFile();// This reads the default file "bonmin.opt"
++  //bonmin.readOptionsFile("Mybonmin.opt");
++  //bonmin.readOptionsFile();// This reads the default file "bonmin.opt"
+   
+   // Options can also be set by using a string with a format similar to the bonmin.opt file
+-  bonmin.readOptionsString("bonmin.algorithm B-BB\n");
++  //bonmin.readOptionsString("bonmin.algorithm B-BB\n");
++
++  bonmin.options()->SetStringValue("bonmin.algorithm", "B-BB");
++  //bonmin.options()->SetIntegerValue("bonmin.iteration_limit", 1000);
++  bonmin.options()->SetNumericValue("bound_relax_factor", 0.0);
+   
+   // Now we can obtain the value of the new option
+   int printSolution;
+@@ -79,7 +84,7 @@ int main (int argc, char *argv[])
+     Bab bb;
+     bb(bonmin);//process parameter file using Ipopt and do branch and bound using Cbc
+ 
+-
++    std::cout << "success"<< std::endl;
+   }
+   catch(TNLPSolver::UnsolvedError *E) {
+     //There has been a failure to solve a problem with Ipopt.
